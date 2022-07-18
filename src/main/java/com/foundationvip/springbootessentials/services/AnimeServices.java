@@ -1,6 +1,7 @@
 package com.foundationvip.springbootessentials.services;
 
 import com.foundationvip.springbootessentials.domain.Anime;
+import com.foundationvip.springbootessentials.mapper.AnimeMapper;
 import com.foundationvip.springbootessentials.request.AnimePostRequestBody;
 import com.foundationvip.springbootessentials.repository.AnimeRepository;
 import com.foundationvip.springbootessentials.request.AnimePutRequestBody;
@@ -27,7 +28,7 @@ public class AnimeServices {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(Long id) {
@@ -35,10 +36,7 @@ public class AnimeServices {
     }
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
-        Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        Anime anime = Anime.builder()
-                .id(savedAnime.getId())
-                .name(animePutRequestBody.getName()).build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
         animeRepository.save(anime);
     }
 }
