@@ -1,13 +1,12 @@
 package com.foundationvip.springbootessentials.services;
 
 import com.foundationvip.springbootessentials.domain.Anime;
+import com.foundationvip.springbootessentials.exception.BadRequestException;
 import com.foundationvip.springbootessentials.mapper.AnimeMapper;
 import com.foundationvip.springbootessentials.request.AnimePostRequestBody;
 import com.foundationvip.springbootessentials.repository.AnimeRepository;
 import com.foundationvip.springbootessentials.request.AnimePutRequestBody;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,9 +21,13 @@ public class AnimeServices {
         return animeRepository.findAll();
     }
 
+    public List<Anime> findByName(String anime){
+        return animeRepository.findByName(anime);
+    }
+
     public Anime findByIdOrThrowBadRequestException(Long id){
         return animeRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+                orElseThrow(() -> new BadRequestException("Anime not found"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
