@@ -6,6 +6,8 @@ import com.foundationvip.springbootessentials.mapper.AnimeMapper;
 import com.foundationvip.springbootessentials.request.AnimePostRequestBody;
 import com.foundationvip.springbootessentials.repository.AnimeRepository;
 import com.foundationvip.springbootessentials.request.AnimePutRequestBody;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +20,8 @@ public class AnimeServices {
         this.animeRepository = animeRepository;
     }
 
-    public List<Anime> listAll(){
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable){
+        return animeRepository.findAll(pageable);
     }
 
     public List<Anime> findByName(String anime){
