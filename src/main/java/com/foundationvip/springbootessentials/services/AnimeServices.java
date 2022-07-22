@@ -23,6 +23,9 @@ public class AnimeServices {
     public Page<Anime> listAll(Pageable pageable){
         return animeRepository.findAll(pageable);
     }
+    public List<Anime> listAllNonPageble() {
+        return animeRepository.findAll();
+    }
 
     public List<Anime> findByName(String anime){
         return animeRepository.findByName(anime);
@@ -45,4 +48,6 @@ public class AnimeServices {
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
         animeRepository.save(anime);
     }
+
+
 }
